@@ -1,0 +1,249 @@
+body {
+  font-family: 'Zen Kurenaido', sans-serif;
+  text-align: center;
+  background: #ffe4e1;
+  color: #555;
+  padding: 2em;
+}
+
+body h1 {
+  font-size: 40px;
+}
+
+body h2 {
+  font-size: 35px;
+}
+
+body form h3 {
+  font-size: 30px;
+}
+
+#memo_card {
+  padding: 0;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+#memo_card ul {
+  margin: 5% 10%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  list-style: none;
+  border: none;
+}
+
+#memo_card ul li {
+  margin: 2em;
+  padding: 40px;
+  width: 320px;
+  transition: box-shadow 0.3s;
+}
+
+#memo_card ul li:hover {
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#memo_card ul li:hover p {
+  color: #555;
+}
+#memo_card ul li:hover .title {
+  color: salmon;
+}
+
+#memo_card ul li:hover .title:after {
+  width: 25px;
+}
+
+#memo_card ul li .title {
+  color: #6f6f6f;
+  display: inline-block;
+  font-size: 35px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+#memo_card ul li .title:after {
+  content: "";
+  position: relative;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: #6f6f6f;
+  transition: width 0.3s;
+}
+
+#memo_card ul li .text {
+  color: #A2A2A2;
+  text-align: left;
+  text-indent: 1em;
+  font-size: 25px;
+  margin: 1em 0 3em 0;
+  line-height: 26px;
+  transition: color 0.3s;
+}
+
+#memo_card ul li div .button_to_see_memo {
+  text-align: center;
+  font-size: 25px;
+  background: lightsalmon;
+  color: #fff;
+  padding: 10px 40px;
+  text-decoration: none;
+  border-radius: 30px;
+}
+
+#memo_card ul li div .button_to_see_memo:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+body .home_button {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+body .home_button button {
+  font-family: FontAwesome;
+  font-size: 1.2em;
+  border: none;
+  margin: 1em;
+  background: #ff9999;
+  color: #fff;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+body .home_button button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+body .delete_button {
+  position: fixed;
+  top: 15%;
+  left: 0;
+}
+
+body .delete_button button {
+  font-family: FontAwesome;
+  font-size: 1.2em;
+  border: none;
+  margin: 1em;
+  background: #ff9999;
+  color: #fff;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+body .delete_button button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+
+body .edit_button {
+  position: fixed;
+  top: 30%;
+  left: 0;
+}
+
+body .edit_button button {
+  font-family: FontAwesome;
+  font-size: 1.2em;
+  border: none;
+  margin: 1em;
+  background: #ff9999;
+  color: #fff;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+body .edit_button button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+body .button_to_create_new button {
+  font-family: FontAwesome;
+  font-size: 1.2em;
+  border: none;
+  margin: 1em;
+  background: #ff9999;
+  color: #fff;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+body .button_to_create_new button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+body #title_of_memo {
+  display: block;
+  text-align: left;
+  font-size: 20px;
+  margin: 2em 16em;
+  padding: 1em;
+  background: #ffd6d6;
+}
+
+body #content_of_memo {
+  display: block;
+  text-align: left;
+  font-size: 20px;
+  margin: 2em 16em;
+  padding: 1em;
+  background: #ffd6d6;
+}
+
+body form input {
+  width: 50%;
+  padding: 1em ;
+  border-radius: 5px;
+  border: none;
+}
+
+body form input:focus{
+  outline: none;
+  border: 1px solid orangered;
+}
+
+body form textarea {
+  width: 50%;
+  padding: 1em ;
+  border-radius: 5px;
+  border: none;
+}
+
+body form textarea:focus{
+  outline: none;
+  border: 1px solid orangered;
+}
+
+
+body form .save_button {
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 25px;
+  background: lightsalmon;
+  color: #fff;
+  margin: 2em;
+  width: 7em;
+  padding-top: 6px;
+  padding-bottom: 10px;
+  border-radius: 30px;
+}
+
+body form .save_button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
