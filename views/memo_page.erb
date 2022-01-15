@@ -1,0 +1,23 @@
+<h2>Title</h2>
+<div id="title_of_memo">
+  <%= @title%>
+</div>
+<h2>Memo</h2>
+<div id="content_of_memo">
+  <%= @memo%>
+</div>
+<div class="delete_button">
+  <form method="post" action="/memo/<%= @hash_order%>"> <input type="hidden" name="hash_order" value="<%= @hash_order%>"> <input type="hidden" name="_method" value="delete"> <button type="submit">
+    <i class="fas fa-trash-alt"></i>
+    </button> </form>
+</div>
+<div class="edit_button">
+  <form method="get" action="<%= @url_edit%>"> <button type="submit">
+    <i class="fas fa-edit"></i>
+    </button> </form>
+</div>
+<div class="home_button">
+  <form method="get" action="http://127.0.0.1:4567/memo"> <button type="submit">
+    <i class="fas fa-home"></i>
+    </button> </form>
+</div>
