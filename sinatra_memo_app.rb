@@ -29,10 +29,10 @@ get '/memo' do
   memo_data = Memo.all
   memo_data.each.with_index do |_hash, i|
     @list += '<li>'
-    @list += "<p class=\"title\">#{memo_data[i]['title']}</p>"
-    @list += "<p class=\"text\">#{memo_data[i]['text']}</p>"
+    @list += "<p class=\"title\">#{CGI.escape_html(memo_data[i]['title'])}</p>"
+    @list += "<p class=\"text\">#{CGI.escape_html(memo_data[i]['text'])}</p>"
 
-    url = "http://127.0.0.1:4567/memo/#{i}"
+    url = "/memo/#{i}"
     @list += "<div><a href=#{url} class=\"button_to_see_memo\">go to memo</a></div>"
     @list += "</li>\n"
   end
@@ -40,39 +40,35 @@ get '/memo' do
   erb :top_page
 end
 
+get '/memo/new' do
+  erb :create_new_memo
+end
+
 get '/memo/:hash_order' do
-  if params[:hash_order] == 'new'
-    erb :create_new_memo
-  else
-    @title = ''
-    @memo = ''
+  hash_order = params[:hash_order].to_i
+  @hash_order = hash_order
 
-    hash_order = params[:hash_order].to_i
-    @hash_order = hash_order
-    memo_data = Memo.all
-    @title += memo_data[hash_order]['title']
+  memo_data = Memo.all
+  @title = CGI.escape_html(memo_data[hash_order]['title'])
 
-    @memo += memo_data[hash_order]['text']
+  @memo = CGI.escape_html(memo_data[hash_order]['text'])
 
-    @url_edit = "http://127.0.0.1:4567/memo/#{hash_order}/edit"
-
-    erb :memo_page
-  end
+  erb :memo_page
 end
 
 get '/memo/:hash_order/edit' do
   hash_order = params[:hash_order].to_i
   @hash_order = hash_order
   memo_data = Memo.all
-  @title = memo_data[hash_order]['title']
-  @memo = memo_data[hash_order]['text']
+  @title = CGI.escape_html(memo_data[hash_order]['title'])
+  @memo = CGI.escape_html(memo_data[hash_order]['text'])
 
   erb :edit_page
 end
 
-post '/memo/new' do
+post '/memo' do
   memo_data = Memo.all
-  memo_data << { 'title' => CGI.escape_html(params[:title]), 'text' => CGI.escape_html(params[:text]) }
+  memo_data << { 'title' => params[:title], 'text' => params[:text] }
   Memo.update(memo_data)
 
   redirect to('/memo')
@@ -83,7 +79,7 @@ patch '/memo/:hash_order' do
   memo_data = Memo.all
   memo_data.delete_at(hash_order)
 
-  new_memo_data = { 'title' => CGI.escape_html(params[:title]), 'text' => CGI.escape_html(params[:text]) }
+  new_memo_data = { 'title' => params[:title], 'text' => params[:text] }
   memo_data.insert(hash_order, new_memo_data)
   Memo.update(memo_data)
 

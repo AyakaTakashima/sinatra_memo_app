@@ -4,7 +4,7 @@
   <td><input type="text" name="title" class="title_input_area" value="<%= @title%>" </td>
     <h3>Text</h3> <textarea name="text"><%= @memo%></textarea> <br> <input type="submit" value="save" class="save_button"> <input type="hidden" name="hash_order" value="<%= @hash_order%>"> <input type="hidden" name="_method" value="patch"> </form>
 <div class="home_button">
-  <form method="get" action="http://127.0.0.1:4567/memo"> <button type="submit">
+  <form method="get" action="/memo"> <button type="submit">
     <i class="fas fa-home"></i>
     </button> </form>
 </div>
