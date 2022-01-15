@@ -23,3 +23,6 @@ gem "webrick"
 4. `bundle exec ruby sinatra_memo_app.rb`を実行
 5. `http://127.0.0.1:4567/memo`にアクセス
 
+
+
+
