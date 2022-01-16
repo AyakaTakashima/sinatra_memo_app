@@ -49,9 +49,9 @@ get '/memo/:hash_order' do
   @hash_order = hash_order
 
   memo_data = Memo.all
-  @title = CGI.escape_html(memo_data[hash_order]['title'])
+  @title = memo_data[hash_order]['title']
 
-  @memo = CGI.escape_html(memo_data[hash_order]['text'])
+  @memo = memo_data[hash_order]['text']
 
   erb :memo_page
 end
@@ -60,8 +60,8 @@ get '/memo/:hash_order/edit' do
   hash_order = params[:hash_order].to_i
   @hash_order = hash_order
   memo_data = Memo.all
-  @title = CGI.escape_html(memo_data[hash_order]['title'])
-  @memo = CGI.escape_html(memo_data[hash_order]['text'])
+  @title = memo_data[hash_order]['title']
+  @memo = memo_data[hash_order]['text']
 
   erb :edit_page
 end

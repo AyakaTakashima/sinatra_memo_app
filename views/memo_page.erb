@@ -1,10 +1,10 @@
 <h2>Title</h2>
 <div id="title_of_memo">
-  <%= @title%>
+  <%= CGI.escape_html(@title) %>
 </div>
 <h2>Memo</h2>
 <div id="content_of_memo">
-  <%= @memo%>
+  <%= CGI.escape_html(@memo) %>
 </div>
 <div class="delete_button">
   <form method="post" action="/memo/<%= @hash_order%>"> <input type="hidden" name="hash_order" value="<%= @hash_order%>"> <input type="hidden" name="_method" value="delete"> <button type="submit">
