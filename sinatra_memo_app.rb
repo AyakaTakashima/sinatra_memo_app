@@ -24,19 +24,6 @@ class Memo
 end
 
 get '/memo' do
-  @list = ''
-
-  memo_data = Memo.all
-  memo_data.each.with_index do |_hash, i|
-    @list += '<li>'
-    @list += "<p class=\"title\">#{CGI.escape_html(memo_data[i]['title'])}</p>"
-    @list += "<p class=\"text\">#{CGI.escape_html(memo_data[i]['text'])}</p>"
-
-    url = "/memo/#{i}"
-    @list += "<div><a href=#{url} class=\"button_to_see_memo\">go to memo</a></div>"
-    @list += "</li>\n"
-  end
-
   erb :top_page
 end
 
@@ -49,9 +36,7 @@ get '/memo/:hash_order' do
   @hash_order = hash_order
 
   memo_data = Memo.all
-  @title = memo_data[hash_order]['title']
-
-  @memo = memo_data[hash_order]['text']
+  @memo = memo_data[hash_order]
 
   erb :memo_page
 end
@@ -60,15 +45,14 @@ get '/memo/:hash_order/edit' do
   hash_order = params[:hash_order].to_i
   @hash_order = hash_order
   memo_data = Memo.all
-  @title = memo_data[hash_order]['title']
-  @memo = memo_data[hash_order]['text']
+  @memo = memo_data[hash_order]
 
   erb :edit_page
 end
 
 post '/memo' do
   memo_data = Memo.all
-  memo_data << { 'title' => params[:title], 'text' => params[:text] }
+  memo_data << { title: params[:title], text: params[:text] }
   Memo.update(memo_data)
 
   redirect to('/memo')
@@ -79,7 +63,7 @@ patch '/memo/:hash_order' do
   memo_data = Memo.all
   memo_data.delete_at(hash_order)
 
-  new_memo_data = { 'title' => params[:title], 'text' => params[:text] }
+  new_memo_data = { title: params[:title], text: params[:text] }
   memo_data.insert(hash_order, new_memo_data)
   Memo.update(memo_data)
 
