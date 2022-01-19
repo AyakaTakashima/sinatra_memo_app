@@ -1,10 +1,9 @@
 <div id="memo_card">
   <ul>
-    <% memo_data = Memo.all %>
-    <% memo_data.each.with_index do |_hash, i| %>
+    <% @memo_data.each.with_index do |memo, i| %>
     <li>
-    <p class="title"><%= CGI.escape_html(memo_data[i]['title']) %> </p>
-    <p class="text"><%= CGI.escape_html(memo_data[i]['text']) %></p>
+    <p class="title"><%= CGI.escape_html(memo['title']) %> </p>
+    <p class="text"><%= CGI.escape_html(memo['text']) %></p>
 
     <% url = "/memo/#{i}" %>
     <div><a href= <%= url %> class="button_to_see_memo">go to memo</a></div>

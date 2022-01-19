@@ -24,6 +24,7 @@ class Memo
 end
 
 get '/memo' do
+  @memo_data = Memo.all
   erb :top_page
 end
 
