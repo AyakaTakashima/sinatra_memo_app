@@ -1,10 +1,18 @@
 <div id="memo_card">
   <ul>
-    <%= @list%>
+    <% @memo_data.each.with_index do |memo, i| %>
+    <li>
+    <p class="title"><%= CGI.escape_html(memo['title']) %> </p>
+    <p class="text"><%= CGI.escape_html(memo['text']) %></p>
+
+    <% url = "/memo/#{i}" %>
+    <div><a href= <%= url %> class="button_to_see_memo">go to memo</a></div>
+    </li>
+  <% end %>
   </ul>
 </div>
 <div class="button_to_create_new">
-  <form method="get" action="http://127.0.0.1:4567/memo/new"> <button type="submit">
+  <form method="get" action="/memo/new"> <button type="submit">
     <i class="fas fa-plus"></i>
     </button> </form>
 </div>
