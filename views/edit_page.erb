@@ -1,8 +1,10 @@
 <h2>Edit Memo</h2>
-<form method="post" action="/memo/<%= @hash_order%>">
+<form method="post" action="/memo/<%= @memo_id%>">
+<% @memo_data.each do |memo| %>
   <h3>Title</h3>
-  <td><input type="text" name="title" class="title_input_area" value="<%= CGI.escape_html(@memo['title'])%>" </td>
-    <h3>Text</h3> <textarea name="text"><%= CGI.escape_html(@memo['text'])%></textarea> <br> <input type="submit" value="save" class="save_button"> <input type="hidden" name="hash_order" value="<%= @hash_order%>"> <input type="hidden" name="_method" value="patch"> </form>
+  <td><input type="text" name="title" class="title_input_area" value="<%= CGI.escape_html(memo['title'])%>" </td>
+    <h3>Text</h3> <textarea name="text"><%= CGI.escape_html(memo['text'])%></textarea> <br> <input type="submit" value="save" class="save_button"> <input type="hidden" name="id" value="<%= @memo_id%>"> <input type="hidden" name="_method" value="patch"> </form>
+<% end %>
 <div class="home_button">
   <form method="get" action="/memo"> <button type="submit">
     <i class="fas fa-home"></i>

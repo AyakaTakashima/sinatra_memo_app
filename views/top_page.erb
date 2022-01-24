@@ -1,14 +1,14 @@
 <div id="memo_card">
   <ul>
-    <% @memo_data.each.with_index do |memo, i| %>
+    <% @memo_data.each do |memo| %>
     <li>
     <p class="title"><%= CGI.escape_html(memo['title']) %> </p>
     <p class="text"><%= CGI.escape_html(memo['text']) %></p>
 
-    <% url = "/memo/#{i}" %>
+    <% url = "/memo/#{memo['id']}" %>
     <div><a href= <%= url %> class="button_to_see_memo">go to memo</a></div>
     </li>
-  <% end %>
+   <% end %>
   </ul>
 </div>
 <div class="button_to_create_new">

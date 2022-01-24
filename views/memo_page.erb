@@ -1,21 +1,24 @@
 <h2>Title</h2>
-<div id="title_of_memo">
-  <%= CGI.escape_html(@memo['title']) %>
-</div>
-<h2>Memo</h2>
-<div id="content_of_memo">
-  <%= CGI.escape_html(@memo['text']) %>
-</div>
-<div class="delete_button">
-  <form method="post" action="/memo/<%= @hash_order%>"> <input type="hidden" name="hash_order" value="<%= @hash_order%>"> <input type="hidden" name="_method" value="delete"> <button type="submit">
-    <i class="fas fa-trash-alt"></i>
-    </button> </form>
-</div>
-<div class="edit_button">
-  <form method="get" action="/memo/<%= @hash_order%>/edit"> <button type="submit">
-    <i class="fas fa-edit"></i>
-    </button> </form>
-</div>
+<% @memo_data.each do |memo| %>
+  <div id="title_of_memo">
+    <%= CGI.escape_html(memo['title']) %>
+  </div>
+  <h2>Memo</h2>
+  <div id="content_of_memo">
+    <%= CGI.escape_html(memo['text']) %>
+  </div>
+  <div class="delete_button">
+    <form method="post" action="/memo/<%= memo['id']%>"> <input type="hidden" name="id" value="<%= memo['id']%>"> <input type="hidden" name="_method" value="delete"> <button type="submit">
+      <i class="fas fa-trash-alt"></i>
+      </button> </form>
+  </div>
+  <div class="edit_button">
+    <form method="get" action="/memo/<%= memo['id']%>/edit"> <button type="submit">
+      <i class="fas fa-edit"></i>
+      </button> </form>
+  </div>
+<% end %>
+
 <div class="home_button">
   <form method="get" action="/memo"> <button type="submit">
     <i class="fas fa-home"></i>
