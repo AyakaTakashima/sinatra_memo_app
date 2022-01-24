@@ -21,7 +21,7 @@ class Memo
 
   def self.show(id)
     connection = PG.connect(:host => "localhost", :user => "takashimaayaka", :password => "", :dbname => "web_application_practice")
-    connection.exec( "SELECT id, title, text FROM memo_data WHERE id = #{id}" )
+    connection.exec( "SELECT id, title, text FROM memo_data WHERE id = #{id}" ) { |result| result[0] }
   end
 
   def self.update(id, title, text)
