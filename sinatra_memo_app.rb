@@ -10,28 +10,28 @@ set :environment, :production
 # This is class to read memo data from database.
 class Memo
   def self.all
-    connection = PG.connect(:host => "localhost", :user => "takashimaayaka", :password => "", :dbname => "web_application_practice")
-    connection.exec( "SELECT * FROM memo_data ORDER BY id" )
+    connection = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
+    connection.exec('SELECT * FROM memo_data ORDER BY id')
   end
 
-  def self.new(title: title, text: title)
-    connection = PG.connect(:host => "localhost", :user => "takashimaayaka", :password => "", :dbname => "web_application_practice")
-    connection.exec( "INSERT INTO memo_data(title, text) VALUES ('#{title}','#{text}')" )
+  def self.new(title, text)
+    connection = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
+    connection.exec("INSERT INTO memo_data(title, text) VALUES ('#{title}','#{text}')")
   end
 
   def self.show(id)
-    connection = PG.connect(:host => "localhost", :user => "takashimaayaka", :password => "", :dbname => "web_application_practice")
-    connection.exec( "SELECT id, title, text FROM memo_data WHERE id = #{id}" ) { |result| result[0] }
+    connection = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
+    connection.exec("SELECT id, title, text FROM memo_data WHERE id = #{id}") { |result| result[0] }
   end
 
   def self.update(id, title, text)
-    connection = PG.connect(:host => "localhost", :user => "takashimaayaka", :password => "", :dbname => "web_application_practice")
-    connection.exec( "UPDATE memo_data SET title = '#{title}', text = '#{text}' WHERE id = #{id}")
+    connection = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
+    connection.exec("UPDATE memo_data SET title = '#{title}', text = '#{text}' WHERE id = #{id}")
   end
 
   def self.delete(id)
-    connection = PG.connect(:host => "localhost", :user => "takashimaayaka", :password => "", :dbname => "web_application_practice")
-    connection.exec( "DELETE FROM memo_data WHERE id = #{id}" )
+    connection = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
+    connection.exec("DELETE FROM memo_data WHERE id = #{id}")
   end
 end
 
@@ -54,21 +54,20 @@ end
 
 get '/memo/:id/edit' do
   memo_id = params[:id].to_i
-  @memo_id = memo_id
   @memo_data = Memo.show(memo_id)
 
   erb :edit_page
 end
 
 post '/memo' do
-  Memo.new(title: params[:title], text: params[:text])
+  Memo.new(params[:title], params[:text])
 
   redirect to('/memo')
 end
 
 patch '/memo/:id' do
   memo_id = params[:id].to_i
-  Memo.update( memo_id, params[:title], params[:text] )
+  Memo.update(memo_id, params[:title], params[:text])
 
   redirect to('/memo')
 end
