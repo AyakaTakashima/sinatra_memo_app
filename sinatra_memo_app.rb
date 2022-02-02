@@ -14,7 +14,7 @@ class Memo
     connection.exec('SELECT * FROM memo_data ORDER BY id')
   end
 
-  def self.new(title, text)
+  def self.create_new(title, text)
     connection = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
     connection.exec("INSERT INTO memo_data(title, text) VALUES ('#{title}','#{text}')")
   end
@@ -60,14 +60,18 @@ get '/memo/:id/edit' do
 end
 
 post '/memo' do
-  Memo.new(params[:title], params[:text])
+  title = params[:title].gsub("'","''")
+  text = params[:text].gsub("'","''")
+  Memo.create_new(title, text)
 
   redirect to('/memo')
 end
 
 patch '/memo/:id' do
   memo_id = params[:id].to_i
-  Memo.update(memo_id, params[:title], params[:text])
+  title = params[:title].gsub("'","''")
+  text = params[:text].gsub("'","''")
+  Memo.update(memo_id, title, text)
 
   redirect to('/memo')
 end
