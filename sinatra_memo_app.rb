@@ -3,23 +3,33 @@
 
 require 'sinatra'
 require 'cgi'
-require 'json'
+require 'pg'
 
 set :environment, :production
 
-# This is class to read memo data from json file.
+# This is class to read memo data from database.
 class Memo
+  CONNECTION = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
+  private_constant :CONNECTION
+
   def self.all
-    File.open('memos.json', 'r') do |file|
-      read_line = file.read
-      JSON.parse(read_line)
-    end
+    CONNECTION.exec('SELECT * FROM memo_data ORDER BY id')
   end
 
-  def self.update(memo_data)
-    File.open('memos.json', 'w') do |f|
-      JSON.dump(memo_data, f)
-    end
+  def self.create_new(title, text)
+    CONNECTION.exec('INSERT INTO memo_data(title, text) VALUES ($1, $2)', [title, text])
+  end
+
+  def self.show(id)
+    CONNECTION.exec('SELECT id, title, text FROM memo_data WHERE id = $1', [id]) { |result| result[0] }
+  end
+
+  def self.update(id, title, text)
+    CONNECTION.exec('UPDATE memo_data SET title = $1, text = $2 WHERE id = $3', [title, text, id])
+  end
+
+  def self.delete(id)
+    CONNECTION.exec('DELETE FROM memo_data WHERE id = $1', [id])
   end
 end
 
@@ -32,51 +42,37 @@ get '/memo/new' do
   erb :create_new_memo
 end
 
-get '/memo/:hash_order' do
-  hash_order = params[:hash_order].to_i
-  @hash_order = hash_order
+get '/memo/:id' do
+  memo_id = params[:id].to_i
 
-  memo_data = Memo.all
-  @memo = memo_data[hash_order]
+  @memo_data = Memo.show(memo_id)
 
   erb :memo_page
 end
 
-get '/memo/:hash_order/edit' do
-  hash_order = params[:hash_order].to_i
-  @hash_order = hash_order
-  memo_data = Memo.all
-  @memo = memo_data[hash_order]
+get '/memo/:id/edit' do
+  memo_id = params[:id].to_i
+  @memo_data = Memo.show(memo_id)
 
   erb :edit_page
 end
 
 post '/memo' do
-  memo_data = Memo.all
-  memo_data << { title: params[:title], text: params[:text] }
-  Memo.update(memo_data)
+  Memo.create_new(params[:title], params[:text])
 
   redirect to('/memo')
 end
 
-patch '/memo/:hash_order' do
-  hash_order = params[:hash_order].to_i
-  memo_data = Memo.all
-  memo_data.delete_at(hash_order)
-
-  new_memo_data = { title: params[:title], text: params[:text] }
-  memo_data.insert(hash_order, new_memo_data)
-  Memo.update(memo_data)
+patch '/memo/:id' do
+  memo_id = params[:id].to_i
+  Memo.update(memo_id, params[:title], params[:text])
 
   redirect to('/memo')
 end
 
-delete '/memo/:hash_order' do
-  hash_order = params[:hash_order].to_i
-  memo_data = Memo.all
-
-  memo_data.delete_at(hash_order)
-  Memo.update(memo_data)
+delete '/memo/:id' do
+  memo_id = params[:id].to_i
+  Memo.delete(memo_id)
 
   redirect to('/memo')
 end
