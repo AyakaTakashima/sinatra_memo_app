@@ -10,6 +10,7 @@ set :environment, :production
 # This is class to read memo data from database.
 class Memo
   CONNECTION = PG.connect(host: 'localhost', user: 'takashimaayaka', password: '', dbname: 'web_application_practice')
+  private_constant :CONNECTION
 
   def self.all
     CONNECTION.exec('SELECT * FROM memo_data ORDER BY id')
@@ -57,18 +58,14 @@ get '/memo/:id/edit' do
 end
 
 post '/memo' do
-  title = params[:title].gsub("'", "''")
-  text = params[:text].gsub("'", "''")
-  Memo.create_new(title, text)
+  Memo.create_new(params[:title], params[:text])
 
   redirect to('/memo')
 end
 
 patch '/memo/:id' do
   memo_id = params[:id].to_i
-  title = params[:title].gsub("'", "''")
-  text = params[:text].gsub("'", "''")
-  Memo.update(memo_id, title, text)
+  Memo.update(memo_id, params[:title], params[:text])
 
   redirect to('/memo')
 end
